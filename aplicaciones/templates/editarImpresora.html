@@ -1,0 +1,52 @@
+{% extends './plantilla.html' %}
+{% load static %}
+{% block body %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 bg-light p-4 rounded">
+        <h1>Editar Impresora</h1>
+        <form action="{% url 'procesarEdicionImpresora' %}" id="frm_editar_impresora" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ impresora.id }}">
+
+            <label for="marca">Marca</label><br>
+            <input required class="form-control" type="text" name="marca" id="marca" maxlength="50" value="{{ impresora.marca }}"><br>
+
+            <label for="propietario">Propietario</label><br>
+            <input required class="form-control" type="text" name="propietario" id="propietario" maxlength="100" value="{{ impresora.propietario }}"><br>
+
+            <label for="descripcion">Descripción</label><br>
+            <textarea class="form-control" name="descripcion" id="descripcion" rows="3">{{ impresora.descripcion }}</textarea><br>
+
+            <label for="estado">Estado</label><br>
+            <select required class="form-control" name="estado" id="estado">
+                <option value="">-- Seleccione estado --</option>
+                {% for estado_opcion in estados %}
+                    <option value="{{ estado_opcion }}" {% if estado_opcion == impresora.estado %}selected{% endif %}>
+                        {{ estado_opcion|capfirst|replace:"_" " " }}
+                    </option>
+                {% endfor %}
+            </select><br>
+
+            <button class="btn btn-success" type="submit">Actualizar</button>
+            <a class="btn btn-outline-danger" href="{% url 'impresoras' %}">Cancelar</a>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<script>
+    $("#frm_editar_impresora").validate({
+        rules: {
+            marca: { required: true, maxlength: 50 },
+            propietario: { required: true, maxlength: 100 },
+            estado: { required: true }
+        },
+        messages: {
+            marca: { required: "Debe ingresar la marca", maxlength: "Máximo 50 caracteres" },
+            propietario: { required: "Debe ingresar el propietario", maxlength: "Máximo 100 caracteres" },
+            estado: { required: "Debe seleccionar un estado" }
+        }
+    });
+</script>
+{% endblock %}
