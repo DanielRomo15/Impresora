@@ -4,9 +4,7 @@ from .models import Impresora, Mantenimiento
 
 # --- Impresora ---
 
-def impresoras(request):
-    impresoras = Impresora.objects.all()
-    return render(request, 'impresoras.html', {'impresoras': impresoras})
+
 
 def nuevaImpresora(request):
     return render(request, 'nuevaImpresora.html')
