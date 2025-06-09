@@ -34,6 +34,19 @@
     </div>
     <div class="col-md-3"></div>
 </div>
-
+<script>
+    $("#frm_editar_impresora").validate({
+        rules: {
+            marca: { required: true, maxlength: 50 },
+            propietario: { required: true, maxlength: 100 },
+            estado: { required: true }
+        },
+        messages: {
+            marca: { required: "Debe ingresar la marca", maxlength: "Máximo 50 caracteres" },
+            propietario: { required: "Debe ingresar el propietario", maxlength: "Máximo 100 caracteres" },
+            estado: { required: "Debe seleccionar un estado" }
+        }
+    });
+</script>
 
 {% endblock %}
